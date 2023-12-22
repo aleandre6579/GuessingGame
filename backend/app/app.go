@@ -34,7 +34,7 @@ func (app *App) Start(ctx context.Context) error {
 	app.router = loadRoutes(app)
 
 	http_server := &http.Server{
-		Addr:    ":3000",
+		Addr:    ":8080",
 		Handler: app.router,
 	}
 
