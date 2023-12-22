@@ -1,0 +1,58 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    healthcheck:
+      test: ["CMD", "mariadb", "-u${DB_USER}", "-p${DB_PASSWORD}", "--port=${DB_PORT}", "--host=${DB_HOST}"]
+      interval: 2s
+      timeout: 3s
+      retries: 5
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    volumes:
+      - ./scripts/init.sh:/docker-entrypoint-initdb.b/init.sh
+      - mariadata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - system-facing
+  frontend:
+    image: guess-game-frontend
+    build: ./frontend
+    networks:
+      - user-facing
+  backend:
+    image: guess-game-backend
+    build: ./backend
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_ADDR=${DB_ADDR}
+    networks:
+      - user-facing
+      - system-facing
+  proxy:
+    image: nginx:1.21
+    ports:
+      - "7887:80"
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - "./proxy/default.conf:/etc/nginx/conf.d/default.conf"
+    networks:
+      - user-facing
+volumes:
+    mariadata:
+      driver: local
+networks:
+  user-facing:
+  system-facing:

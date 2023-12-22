@@ -25,7 +25,7 @@ func CreateConfig() Config {
 		},
 	}
 
-	if dbAddress, exists := os.LookupEnv("DB_ADDRESS"); exists {
+	if dbAddress, exists := os.LookupEnv("DB_ADDR"); exists {
 		config.DatabaseConfig.Addr = dbAddress
 	}
 
