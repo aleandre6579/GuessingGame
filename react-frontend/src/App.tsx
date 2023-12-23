@@ -5,10 +5,20 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  
+  const backgroundDiv = document.getElementById('circle')
+  for(let i = 0; i < 10; i++) {
+    const circle = document.createElement("span")
+    circle.classList.add("back-circle")
+    document.body.insertBefore(circle, backgroundDiv)
+  }
 
   return (
     <>
-      <div>
+      <div id='bckground'>
+        <div className='grid grid-rows-4 grid-flow-col gap-4'>
+          <span id='circle'></span>
+        </div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
