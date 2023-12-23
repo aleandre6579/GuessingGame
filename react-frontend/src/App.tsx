@@ -1,21 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Background from './components/Background';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './pages/Home';
+import Easy from './pages/Easy';
+import Medium from './pages/Medium';
+import Hard from './pages/Hard';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <Background/>
-      
-      <div>
-        <button className='w-5 h-5'>
-          Easy
-        </button>
-      </div>
+      <BrowserRouter>
+        <Routes>
+            <Route index element={<Home />} />
+            <Route path="easy" element={<Easy />} />
+            <Route path="medium" element={<Medium />} />
+            <Route path="hard" element={<Hard />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
