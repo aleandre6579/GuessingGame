@@ -11,7 +11,6 @@ export default {
       colors: {
         green: colors.green,
         cyan: colors.cyan,
-        beige: colors.beige,
       }
     },
   },

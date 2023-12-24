@@ -1,6 +1,19 @@
 import Background from '../components/Background';
+import { makeGuess } from '../scripts/gameLogic.js'
+import { isGuessValid } from '../scripts/formLogic.js'
+import {useState} from 'react'
 
 function Easy() {
+  const [inputGuess, setGuess] = useState(0)
+  const [invalidGuess, setInvalidGuess] = useState(false)
+  const handleInputChange = event => {
+    setGuess(event.target.value)
+    if (!isGuessValid(event.target.value, 1, 5)) {
+      setInvalidGuess(true)
+    } else {
+      setInvalidGuess(false)
+    }
+  }
 
   return (
     <>
@@ -14,11 +27,11 @@ function Easy() {
         </p>
 
         <form className="mx-auto">
-          <div className="mb-12">
-            <input type="text" id="username-success" className="border border-sky-500 placeholder-sky-700 text-sm text-black rounded-lg block w-full p-2.5 bg-white" placeholder="Guess here..."/>
-            <p className="float-left mt-2 text-sm">Must be a number between 1 and 5!</p>
+          <div className="mb-16">
+            <input onChange={handleInputChange} type="text" id="username-success" className="border border-sky-500 placeholder-sky-700 text-sm text-black rounded-lg block w-full p-2.5 bg-white" placeholder="Guess here..."/>
+            <p className="float-left mt-2 text-sm">Input must be a number between 1 and 5</p>
           </div>
-          <button className='bg-sky-300 hover:bg-sky-400'>Guess!</button>
+          <button disabled={invalidGuess} onClick={() => makeGuess(inputGuess)} className='disabled:bg-blue-500 enabled:bg-sky-300 enabled:hover:bg-sky-400'>Guess!</button>
         </form>
       </div>
 
