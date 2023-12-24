@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from '../auth/authProvider'
 import axios from 'axios'
 
-const Login = ()  => {
+const Register = ()  => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [usernameError, setUsernameError] = useState("")
     const [passwordError, setPasswordError] = useState("")
+    const [confirmPasswordError, setConfirmPasswordError] = useState("")
     
     const navigate = useNavigate();
     const auth = useAuth();
@@ -15,6 +17,7 @@ const Login = ()  => {
     const validateLogin = () => {
         setUsernameError("")
         setPasswordError("")
+        setConfirmPasswordError("")
 
         if ("" === username) {
             setUsernameError("Please enter your username")
@@ -26,23 +29,33 @@ const Login = ()  => {
             return
         }
 
+        if ("" === confirmPassword) {
+            setConfirmPasswordError("Please confirm password")
+            return
+        }
+
         if (password.length < 7) {
             setPasswordError("The password must be 8 characters or longer")
             return
         }
 
-        logIn()
+        if (password !== confirmPassword) {
+            setConfirmPasswordError("The passwords must match")
+            return
+        }
+
+        register()
     }
 
-    const logIn = async () => {
-        const res = await axios.post("/api/login", JSON.stringify({username, password}))
+    const register = async () => {
+        const res = await axios.post("/api/register", JSON.stringify({username, password}))
         const resData = res.data
 
         if (res.status === 200) {
             auth.setToken(resData.token)
             navigate("/")
         } else {
-            window.alert("Wrong username or password")
+            window.alert("There was a problem with registering")
         }
     }
 
@@ -51,7 +64,7 @@ const Login = ()  => {
             &#x25c0; Back
         </span>
         <div className="titleContainer text-4xl font-medium">
-            <div>Login</div>
+            <div>Sign in</div>
         </div>
         <br />
         <div className="inputContainer">
@@ -72,20 +85,29 @@ const Login = ()  => {
             <label className="errorLabel">{passwordError}</label>
         </div>
         <br />
+        <div className={"inputContainer"}>
+            <input
+                value={password}
+                placeholder="Confirm password"
+                onChange={ev => setConfirmPassword(ev.target.value)}
+                className="inputBox focus:border-sky-600 text-sky-500 border-2 bg-sky-200/80 border-sky-500" />
+            <label className="errorLabel">{confirmPasswordError}</label>
+        </div>
+        <br />
         <div className="">
             <input
                 className="hover:bg-sky-700 bg-sky-500 px-20 py-4 text-xl rounded-lg cursor-pointer"
                 type="button"
                 onClick={validateLogin}
-                value={"Log in"} />
+                value={"Sign in"} />
         </div>
-        <div class="mt-2">
-            <p class="text-body-2 text-black">
-                Don't have an account? 
-                <a className="text-sky-500 cursor-pointer hover:text-sky-800" onClick={() => navigate('/register')}> Sign Up</a>
+        <div className="mt-2">
+            <p className="text-body-2 text-black">
+                Already have an account? 
+                <a className="text-sky-500 cursor-pointer hover:text-sky-800" onClick={() => navigate('/login')}> Log in</a>
             </p>
         </div>
     </div>
 }
 
-export default Login
+export default Register
