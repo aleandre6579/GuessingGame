@@ -30,18 +30,18 @@ function Background() {
         events: {
           onClick: {
             enable: true,
-            mode: "repulse",
+            mode: "",
           },
           onHover: {
             enable: true,
-            mode: ["bubble", "attract"],
+            mode: ["bubble", "repulse"],
           },
         },
         modes: {
           repulse: {
-            distance: 300,
-            duration: .1,
-            speed: 5,
+            distance: 150,
+            duration: 0.1,
+            speed: 0.05,
           },
           attract: {
             distance: 200,
