@@ -10,7 +10,8 @@ export default {
     extend: {
       colors: {
         green: colors.green,
-        cyan: colors.cyan
+        cyan: colors.cyan,
+        beige: colors.beige,
       }
     },
   },
