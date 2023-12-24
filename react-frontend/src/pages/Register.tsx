@@ -59,11 +59,11 @@ const Register = ()  => {
         }
     }
 
-    return <div className="relative mainContainer bg-sky-200/70 h-full p-10 rounded-lg">
+    return <div className="relative mainContainer bg-sky-200/80 h-full p-10 rounded-lg">
         <span onClick={() => {navigate('/')}} className="hover:bg-black/0 hover:translate-x-[-0.25em] transition duration-300 cursor-pointer absolute top-5 left-5 text-lg text-black bg-black/20 rounded-lg p-2">
             &#x25c0; Back
         </span>
-        <div className="titleContainer text-4xl font-medium">
+        <div className="titleContainer text-4xl font-bold text-sky-500">
             <div>Sign in</div>
         </div>
         <br />
