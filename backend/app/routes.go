@@ -20,18 +20,18 @@ func loadRoutes(app *App) *chi.Mux {
 
 	router.Use(middleware.Logger)
 
-	router.Post("/api/login", func(w http.ResponseWriter, r *http.Request) {
-		Login(w, r)
+	router.Post("/login", func(w http.ResponseWriter, r *http.Request) {
+		Login(app.DBClient, w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Post("/api/register", func(w http.ResponseWriter, r *http.Request) {
-		Register(w, r)
+	router.Post("/register", func(w http.ResponseWriter, r *http.Request) {
+		Register(app.DBClient, w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Post("/api/guess", func(w http.ResponseWriter, r *http.Request) {
-		Guess(w, r)
+	router.Post("/guess", func(w http.ResponseWriter, r *http.Request) {
+		Guess(app.DBClient, w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 

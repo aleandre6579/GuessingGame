@@ -3,6 +3,9 @@ package app
 import (
 	"context"
 	"fmt"
+	"guessing-game/db"
+	"guessing-game/db/models/guess"
+	"guessing-game/db/models/user"
 	"net/http"
 
 	"gorm.io/driver/mysql"
@@ -30,6 +33,9 @@ func (app *App) Start(ctx context.Context) error {
 	}
 
 	fmt.Println("Connected to the db!")
+
+	db.InitTable(app.DBClient, guess.Guess{})
+	db.InitTable(app.DBClient, user.User{})
 
 	app.router = loadRoutes(app)
 
