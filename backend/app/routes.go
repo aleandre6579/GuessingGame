@@ -20,7 +20,18 @@ func loadRoutes(app *App) *chi.Mux {
 
 	router.Use(middleware.Logger)
 
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/login", func(w http.ResponseWriter, r *http.Request) {
+		Login(w, r)
+		w.WriteHeader(http.StatusOK)
+	})
+
+	router.Post("/register", func(w http.ResponseWriter, r *http.Request) {
+		Register(w, r)
+		w.WriteHeader(http.StatusOK)
+	})
+
+	router.Post("/guess", func(w http.ResponseWriter, r *http.Request) {
+		Guess(w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 

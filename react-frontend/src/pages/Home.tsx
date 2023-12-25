@@ -1,4 +1,3 @@
-import Background from '../components/Background';
 import DifficultyButton from '../components/DifficultyButton';
 import { Link } from "react-router-dom";
 import '../App.css'

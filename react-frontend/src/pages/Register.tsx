@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../auth/authProvider'
 import axios from 'axios'
@@ -52,7 +52,7 @@ const Register = ()  => {
         const resData = res.data
 
         if (res.status === 200) {
-            auth.setToken(resData.token)
+            auth?.setToken(resData.token)
             navigate("/")
         } else {
             window.alert("There was a problem with registering")
