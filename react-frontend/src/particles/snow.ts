@@ -9,7 +9,7 @@ const options: ISourceOptions = {
     events: {
       onClick: {
         enable: true,
-        mode: "",
+        mode: "attract",
       },
       onHover: {
         enable: true,
@@ -18,19 +18,18 @@ const options: ISourceOptions = {
     },
     modes: {
       repulse: {
-        distance: 100,
-        speed: 0.08,
+        distance: 70,
+        speed: 0.15,
       },
       attract: {
-        distance: 200,
-        duration: 1,
-        factor: 10,
-        maxSpeed: 5,
-        speed: .2
+        distance: 100,
+        duration: 0.2,
+        factor: 5,
+        maxSpeed: 20,
+        speed: 5
       },
       bubble: {
         distance: 300,
-        size: 12,
         duration: 2,
         opacity: 0.8,
       },
@@ -55,7 +54,7 @@ const options: ISourceOptions = {
       density: {
         enable: true,
       },
-      value: 1000,
+      value: 4000,
     },
     opacity: {
       value: 0.5,
@@ -64,7 +63,7 @@ const options: ISourceOptions = {
       type: "circle",
     },
     size: {
-      value: { min: 3, max: 8 },
+      value: { min: 2, max: 6 },
     },
   },
   detectRetina: true,

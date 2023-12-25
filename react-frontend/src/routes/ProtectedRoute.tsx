@@ -6,9 +6,9 @@ export const ProtectedRoute = () => {
   const auth = useAuth();
 
   console.log(auth?.token)
-  if (!auth?.token) {
-    return <Navigate to="/login" />;
-  }
+  // if (!auth?.token) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return <Outlet />;
 };
