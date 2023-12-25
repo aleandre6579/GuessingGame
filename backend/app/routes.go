@@ -10,6 +10,7 @@ import (
 
 func loadRoutes(app *App) *chi.Mux {
 	router := chi.NewRouter()
+	context := BaseContext{app: app}
 
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
@@ -19,6 +20,7 @@ func loadRoutes(app *App) *chi.Mux {
 	router.Use(c.Handler)
 
 	router.Use(middleware.Logger)
+	router.Use(context.SetContextMiddleware)
 
 	router.Post("/login", func(w http.ResponseWriter, r *http.Request) {
 		Login(app.DBClient, w, r)
@@ -30,9 +32,13 @@ func loadRoutes(app *App) *chi.Mux {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Post("/guess", func(w http.ResponseWriter, r *http.Request) {
-		Guess(app.DBClient, w, r)
-		w.WriteHeader(http.StatusOK)
+	router.Group(func(router chi.Router) {
+		router.Use(AuthMiddleware)
+
+		router.Post("/guess", func(w http.ResponseWriter, r *http.Request) {
+			Guess(app.DBClient, w, r)
+			w.WriteHeader(http.StatusOK)
+		})
 	})
 
 	return router
