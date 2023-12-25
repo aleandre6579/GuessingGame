@@ -7,6 +7,7 @@ import (
 )
 
 func InitTable(db *gorm.DB, table interface{}) error {
+	fmt.Println("MIGRATE")
 	if db == nil {
 		return fmt.Errorf("Database is invalid.")
 	}
@@ -18,7 +19,9 @@ func InitTable(db *gorm.DB, table interface{}) error {
 		if err != nil {
 			return err
 		}
+		fmt.Println("MIGRATING")
 	}
 
+	fmt.Println("DID MIGRATE")
 	return nil
 }
