@@ -14,23 +14,23 @@ func loadRoutes(app *App) *chi.Mux {
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
-		Debug:          false,
+		Debug:          true,
 	})
 	router.Use(c.Handler)
 
 	router.Use(middleware.Logger)
 
-	router.Post("/login", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/api/login", func(w http.ResponseWriter, r *http.Request) {
 		Login(w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Post("/register", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/api/register", func(w http.ResponseWriter, r *http.Request) {
 		Register(w, r)
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Post("/guess", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/api/guess", func(w http.ResponseWriter, r *http.Request) {
 		Guess(w, r)
 		w.WriteHeader(http.StatusOK)
 	})
