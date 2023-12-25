@@ -1,10 +1,11 @@
-package app
+package config
 
 import "os"
 
 type Config struct {
-	Addr           string
-	DatabaseConfig DatabaseConfig
+	Addr             string
+	DatabaseConfig   DatabaseConfig
+	DifficultyConfig map[string]LevelBounds
 }
 
 type DatabaseConfig struct {
@@ -12,6 +13,11 @@ type DatabaseConfig struct {
 	Password string
 	Addr     string
 	DBName   string
+}
+
+type LevelBounds struct {
+	Lower int
+	Upper int
 }
 
 func CreateConfig() Config {
@@ -22,6 +28,11 @@ func CreateConfig() Config {
 			Password: "password",
 			Addr:     "localhost:3306",
 			DBName:   "db",
+		},
+		DifficultyConfig: map[string]LevelBounds{
+			"easy":   LevelBounds{1, 5},
+			"medium": LevelBounds{1, 10},
+			"hard":   LevelBounds{1, 20},
 		},
 	}
 

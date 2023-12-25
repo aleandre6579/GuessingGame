@@ -1,6 +1,12 @@
 package guess
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+	"guessing-game/config"
+	"math/rand"
+
+	"gorm.io/gorm"
+)
 
 func GetGuess(db *gorm.DB) (*Guess, error) {
 	guess := &Guess{}
@@ -8,9 +14,14 @@ func GetGuess(db *gorm.DB) (*Guess, error) {
 	return guess, err
 }
 
-func ReplaceGuess(db *gorm.DB, newNumber int) error {
+func RegenerateGuess(db *gorm.DB, levelName string) error {
+	randomNumber, err := randomNumber(levelName)
+	if err != nil {
+		return err
+	}
+
 	guess := &Guess{
-		Number: newNumber,
+		Number: randomNumber,
 	}
 
 	// Delete guess with ID = 0
@@ -23,4 +34,25 @@ func ReplaceGuess(db *gorm.DB, newNumber int) error {
 	}
 
 	return nil
+}
+
+func randomNumber(levelName string) (int, error) {
+	bounds, err := getLevel(levelName)
+	if err != nil {
+		return -1, err
+	}
+
+	number := rand.Intn(bounds.Upper+1-bounds.Lower) + bounds.Lower
+	return number, nil
+}
+
+func getLevel(levelName string) (config.LevelBounds, error) {
+	levels := config.CreateConfig().DifficultyConfig
+
+	for name, bounds := range levels {
+		if name == levelName {
+			return bounds, nil
+		}
+	}
+	return config.LevelBounds{}, fmt.Errorf("Level not found")
 }

@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"guessing-game/config"
 	"guessing-game/db"
 	"guessing-game/db/models/guess"
 	"guessing-game/db/models/user"
@@ -13,12 +14,12 @@ import (
 )
 
 type App struct {
-	Config   Config
+	Config   config.Config
 	DBClient *gorm.DB
 	router   http.Handler
 }
 
-func Init(config Config) *App {
+func Init(config config.Config) *App {
 	app := &App{
 		Config: config,
 	}
@@ -34,8 +35,17 @@ func (app *App) Start(ctx context.Context) error {
 
 	fmt.Println("Connected to the db!")
 
-	db.InitTable(app.DBClient, guess.Guess{})
-	db.InitTable(app.DBClient, user.User{})
+	migrator := app.DBClient.Migrator()
+	if !migrator.HasTable(&user.User{}) {
+		if err := db.InitTable(app.DBClient, &user.User{}); err != nil {
+			return err
+		}
+	}
+	if !migrator.HasTable(&guess.Guess{}) {
+		if err := db.InitTable(app.DBClient, &guess.Guess{}); err != nil {
+			return err
+		}
+	}
 
 	app.router = loadRoutes(app)
 

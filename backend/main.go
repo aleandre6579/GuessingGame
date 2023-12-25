@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	appInstance := app.Init(app.CreateConfig())
-	appInstance.Start(context.Background())
+	game := app.Init(app.CreateConfig())
+	game.Start(context.Background())
 }

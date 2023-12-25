@@ -13,13 +13,13 @@ import (
 func Login(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Login")
 
-	var u user.User
-	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+	var req LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	_, err := user.GetUserByUsernameAndPassword(db, u.Username, u.Password)
+	_, err := user.GetUserByUsernameAndPassword(db, req.Username, req.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -31,13 +31,13 @@ func Login(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 func Register(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Register")
 
-	var u user.User
-	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+	var req LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	_, err := user.CreateUser(db, u.Username, u.Password)
+	_, err := user.CreateUser(db, req.Username, req.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -49,8 +49,8 @@ func Register(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 func Guess(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Guess")
 
-	var userGuess guess.Guess
-	if err := json.NewDecoder(r.Body).Decode(&userGuess); err != nil {
+	var req GuessRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
@@ -61,12 +61,13 @@ func Guess(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if userGuess.Number != correctGuess.Number {
-		fmt.Printf("Incorrect guess (%d != %d)", userGuess.Number, correctGuess.Number)
+	if req.Number != correctGuess.Number {
+		fmt.Printf("Incorrect guess (%d != %d)", req.Number, correctGuess.Number)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
-	fmt.Printf("Correct guess (%d = %d)", userGuess.Number, correctGuess.Number)
+	fmt.Printf("Correct guess (%d = %d)", req.Number, correctGuess.Number)
+	guess.RegenerateGuess(db, req.LevelName)
 	w.WriteHeader(http.StatusCreated)
 }
