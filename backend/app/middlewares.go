@@ -3,7 +3,6 @@ package app
 import (
 	"context"
 	"fmt"
-	"guessing-game/db"
 	"guessing-game/db/models/user"
 	"net/http"
 	"os"
