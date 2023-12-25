@@ -35,6 +35,7 @@ func (app *App) Start(ctx context.Context) error {
 
 	fmt.Println("Connected to the db!")
 
+	fmt.Println("ASDASD")
 	migrator := app.DBClient.Migrator()
 	fmt.Println("Migrator created")
 	if !migrator.HasTable(&user.User{}) {
