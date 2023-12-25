@@ -1,7 +1,11 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-const AuthContext = createContext();
+interface IAuthContext {
+  token: string|null;
+  setToken: (token: any)=>void,
+}
+const AuthContext = createContext<IAuthContext|null>(null);
 
 const AuthProvider = ({ children }) => {
   const [token, setToken_] = useState(localStorage.getItem("token"));
