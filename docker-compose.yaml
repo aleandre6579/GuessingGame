@@ -21,12 +21,12 @@ services:
     networks:
       - system-facing
   frontend:
-    image: guess-game-frontend
+    image: ${FRONTEND_IMAGE}
     build: ./frontend
     networks:
       - user-facing
   backend:
-    image: guess-game-backend
+    image: ${BACKEND_IMAGE}
     build: ./backend
     depends_on:
       mariadb:
@@ -42,7 +42,7 @@ services:
   proxy:
     image: nginx:1.21
     ports:
-      - "7887:80"
+      - "80:80"
     depends_on:
       - backend
       - frontend

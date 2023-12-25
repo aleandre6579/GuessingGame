@@ -14,7 +14,7 @@ func loadRoutes(app *App) *chi.Mux {
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
-		Debug:          true,
+		Debug:          false,
 	})
 	router.Use(c.Handler)
 
