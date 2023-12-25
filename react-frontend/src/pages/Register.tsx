@@ -87,7 +87,7 @@ const Register = ()  => {
         <br />
         <div className={"inputContainer"}>
             <input
-                value={password}
+                value={confirmPassword}
                 placeholder="Confirm password"
                 onChange={ev => setConfirmPassword(ev.target.value)}
                 className="inputBox focus:border-sky-600 text-sky-500 border-2 bg-sky-200/80 border-sky-500" />

@@ -36,9 +36,7 @@ func (app *App) Start(ctx context.Context) error {
 	fmt.Println("Connected to the db!")
 
 	migrator := app.DBClient.Migrator()
-	fmt.Println("Migrator created")
 	if !migrator.HasTable(&user.User{}) {
-		fmt.Println("Has no user table")
 		if err := db.InitTable(app.DBClient, &user.User{}); err != nil {
 			return err
 		}
