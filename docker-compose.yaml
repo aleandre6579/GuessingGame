@@ -22,10 +22,12 @@ services:
       - system-facing
   frontend:
     image: ${FRONTEND_IMAGE}
+    build: ./react-frontend
     networks:
       - user-facing
   backend:
     image: ${BACKEND_IMAGE}
+    build: ./backend
     depends_on:
       mariadb:
         condition: service_healthy

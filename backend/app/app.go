@@ -27,7 +27,7 @@ func Init(config config.Config) *App {
 }
 
 func (app *App) Start(ctx context.Context) error {
-	fmt.Println("Starting backend")
+	fmt.Println("Starting backend...")
 
 	if err := app.connectDB(ctx); err != nil {
 		return err

@@ -20,13 +20,14 @@ func (baseCtx *BaseContext) SetContextMiddleware(next http.Handler) http.Handler
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		ctx = context.WithValue(ctx, "db_client", baseCtx.app.DBClient)
+		next.ServeHTTP(w, r)
 	})
 }
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
-
+		fmt.Println("AUTH MIDDLE")
 		if r.Header["Token"] != nil {
 			fmt.Println("No token in request headers")
 			w.WriteHeader(http.StatusInternalServerError)

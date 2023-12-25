@@ -39,7 +39,7 @@ const Login = ()  => {
         const resData = res.data
 
         if (res.status === 200) {
-            auth?.setToken(resData.token)
+            auth?.setToken(resData)
             navigate("/")
         } else {
             window.alert("Wrong username or password")

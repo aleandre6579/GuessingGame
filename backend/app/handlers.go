@@ -11,20 +11,26 @@ import (
 )
 
 func Login(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Login")
-
 	var req LoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	_, err := user.GetUserByUsernameAndPassword(db, req.Username, req.Password)
+	u, err := user.GetUserByUsernameAndPassword(db, req.Username, req.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	jwt, err := GenerateJWT(u.ID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Println("JWT " + jwt)
+	w.Write([]byte(jwt))
 	w.WriteHeader(http.StatusOK)
 }
 
