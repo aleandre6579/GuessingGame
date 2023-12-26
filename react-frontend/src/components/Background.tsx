@@ -3,7 +3,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import {
   type Container,
 } from "@tsparticles/engine";
- import { loadFull } from "tsparticles"; 
+import { loadFull } from "tsparticles"; 
 import options from "../particles/snow"
 
 function Background() {

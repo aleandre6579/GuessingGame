@@ -29,9 +29,9 @@ const options: ISourceOptions = {
         speed: 10
       },
       bubble: {
-        distance: 300,
+        distance: 400,
         duration: 2,
-        opacity: 0.8,
+        opacity: 1,
       },
     },
   },
@@ -54,10 +54,10 @@ const options: ISourceOptions = {
       density: {
         enable: true,
       },
-      value: 2000,
+      value: 1500,
     },
     opacity: {
-      value: 0.5,
+      value: {min: 0.2, max: 0.5},
     },
     shape: {
       type: "circle",

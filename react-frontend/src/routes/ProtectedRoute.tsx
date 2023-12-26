@@ -5,9 +5,9 @@ export const ProtectedRoute = () => {
   const auth = useAuth();
   const location = useLocation();
 
-  // if (!auth?.token) {
-  //   return <Navigate to="/login" state={{path: location.pathname}}/>;
-  // }
+  if (!auth?.token) {
+    return <Navigate to="/login" state={{path: location.pathname}}/>;
+  }
 
   return <Outlet />;
 };

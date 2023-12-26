@@ -25,7 +25,6 @@ function Level({ levelName, lower, upper}) {
 
   const handleGuess = async (guess) => {
     const res = await makeGuess(guess, levelName)
-    console.log(res)
     if (res === 401) {
       auth?.setToken("")
       return
@@ -37,13 +36,13 @@ function Level({ levelName, lower, upper}) {
   return (
     <>
       <div className='relative flex flex-col items-center'>
-        <div className='border-4 text-sky-500 border-sky-500 mb-20 relative mainContainer bg-sky-200/80 h-full p-10 rounded-full'>
+        <div className='border-4 text-sky-500 border-sky-500 mb-20 relative mainContainer bg-sky-200/90 h-full p-10 rounded-full'>
           <h2 className='cursor-default text-6xl rounded-full font-bold'>
             Guess The Number!
           </h2>
         </div>
 
-        <div className='relative px-28 py-[69px] flex flex-col items-center gap-10 bg-sky-200/80 text-2xl rounded-lg text-black'>
+        <div className='relative px-28 py-[69px] flex flex-col items-center gap-10 bg-sky-200/90 text-2xl rounded-lg text-black'>
           <span onClick={() => {navigate('/')}} className="hover:bg-black/0 hover:translate-x-[-0.25em] transition duration-300 cursor-pointer absolute top-5 left-5 text-lg text-black bg-black/20 rounded-lg p-2">
               &#x25c0; Back
           </span>
