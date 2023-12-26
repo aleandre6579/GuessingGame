@@ -8,7 +8,8 @@ function Easy() {
 
   const [inputGuess, setGuess] = useState(0)
   const [invalidGuess, setInvalidGuess] = useState(false)
-  const [isCorrect, setIsCorrect] = useState(null)
+  const [isCorrect, setIsCorrect] = useState(-1)
+  const [guessedNumber, setGuessedNumber] = useState(0)
 
   const handleInputChange = event => {
     const guess = parseInt(event.target.value)
@@ -20,8 +21,11 @@ function Easy() {
     }
   }
 
-  const handleGuess = (guess) => {
-    setIsCorrect(makeGuess(guess, "easy"))
+  const handleGuess = async (guess) => {
+    const res = await makeGuess(guess, "easy")
+    console.log(res)
+    setIsCorrect(res)
+    setGuessedNumber(guess)
   }
 
   return (
@@ -56,11 +60,11 @@ function Easy() {
             Guess!
           </button>
         </div>
-        <div className={(isCorrect?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-green-500 bg-sky-200/80 text-3xl rounded-lg text-green-500'}>
-          {inputGuess} is Correct!
+        <div className={((isCorrect&&isCorrect!==-1)?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-green-500 bg-sky-200/80 text-3xl rounded-lg text-green-500'}>
+          {guessedNumber} is Correct!
         </div>
-        <div className={((!isCorrect&&isCorrect!==null)?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-red-500 bg-sky-200/80 text-3xl rounded-lg text-red-500'}>
-          {inputGuess} is Wrong!
+        <div className={((!isCorrect&&isCorrect!==-1)?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-red-500 bg-sky-200/80 text-3xl rounded-lg text-red-500'}>
+          {guessedNumber} is Wrong!
         </div>
       </div>
 

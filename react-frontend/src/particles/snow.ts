@@ -54,7 +54,7 @@ const options: ISourceOptions = {
       density: {
         enable: true,
       },
-      value: 4000,
+      value: 2000,
     },
     opacity: {
       value: 0.5,
@@ -63,7 +63,7 @@ const options: ISourceOptions = {
       type: "circle",
     },
     size: {
-      value: { min: 2, max: 6 },
+      value: { min: 3, max: 6 },
     },
   },
   detectRetina: true,
