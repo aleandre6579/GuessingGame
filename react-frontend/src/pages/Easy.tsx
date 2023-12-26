@@ -11,7 +11,8 @@ function Easy() {
   const [isCorrect, setIsCorrect] = useState(null)
 
   const handleInputChange = event => {
-    setGuess(event.target.value)
+    const guess = parseInt(event.target.value)
+    setGuess(guess)
     if (!isGuessValid(event.target.value, 1, 5)) {
       setInvalidGuess(true)
     } else {

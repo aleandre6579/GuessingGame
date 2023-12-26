@@ -45,18 +45,10 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
 
-		fmt.Println(token.Valid)
-		if claims, ok := token.Claims.(jwt.MapClaims); ok {
-
-			expTime, err := time.Parse(time.RFC3339Nano, claims["exp"].(string))
-			if err != nil {
-				fmt.Println("Failed to parse exp")
-				w.WriteHeader(http.StatusInternalServerError)
-				return
-			}
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 
 			// Check expiration
-			if float64(time.Now().Unix()) > float64(expTime.Unix()) {
+			if float64(time.Now().Unix()) > claims["exp"].(float64) {
 				fmt.Println("Token unauthorized")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
@@ -64,9 +56,9 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 			// Check username exists
 			dbClient := ctx.Value("db_client").(*gorm.DB)
-			userId := uint(claims["userId"].(float64))
+			userId := uint(claims["sub"].(float64))
 
-			_, err = user.GetUser(dbClient, userId)
+			_, err := user.GetUser(dbClient, userId)
 			if err != nil {
 				fmt.Println("Token userId does not exist: ", userId)
 				w.WriteHeader(http.StatusUnauthorized)
@@ -74,7 +66,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			}
 
 		} else {
-			fmt.Println("Failed to parse token")
+			fmt.Println("Token not valid")
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}

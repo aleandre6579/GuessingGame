@@ -6,7 +6,6 @@ import (
 	"guessing-game/db/models/guess"
 	user "guessing-game/db/models/user"
 	"net/http"
-	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -24,7 +23,7 @@ func Login(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jwt, err := GenerateJWT(u.ID, u.Username)
+	jwt, err := GenerateJWT(u.ID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -48,7 +47,7 @@ func Register(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jwt, err := GenerateJWT(u.ID, u.Username)
+	jwt, err := GenerateJWT(u.ID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -67,25 +66,18 @@ func Guess(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 
 	var correctGuess *guess.Guess
 	var err error
-	fmt.Println(guess.GetGuessAtLevel(db, req.LevelName))
 	if correctGuess, err = guess.GetGuessAtLevel(db, req.LevelName); err != nil {
 		return
 	}
 
-	n, err := strconv.Atoi(req.Number)
-	if err != nil {
-		fmt.Println("Failed atoi")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
+	n := req.Number
 	if n != correctGuess.Number {
-		fmt.Printf("Incorrect guess (%d != %d)", n, correctGuess.Number)
+		fmt.Printf("Incorrect guess (%d != %d)\n", n, correctGuess.Number)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
-	fmt.Printf("Correct guess (%d = %d)", n, correctGuess.Number)
+	fmt.Printf("Correct guess (%d = %d)\n", n, correctGuess.Number)
 	guess.RegenerateGuess(db, req.LevelName)
 	w.WriteHeader(http.StatusCreated)
 }
