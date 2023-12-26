@@ -8,6 +8,7 @@ function Easy() {
 
   const [inputGuess, setGuess] = useState(0)
   const [invalidGuess, setInvalidGuess] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(null)
 
   const handleInputChange = event => {
     setGuess(event.target.value)
@@ -18,9 +19,13 @@ function Easy() {
     }
   }
 
+  const handleGuess = (guess) => {
+    setIsCorrect(makeGuess(guess, "easy"))
+  }
+
   return (
     <>
-      <div className='flex flex-col items-center'>
+      <div className='relative flex flex-col items-center'>
         <div className='border-4 text-sky-500 border-sky-500 mb-20 relative mainContainer bg-sky-200/80 h-full p-10 rounded-full'>
           <h2 className='cursor-default text-6xl rounded-full font-bold'>
             Guess The Number!
@@ -44,16 +49,16 @@ function Easy() {
 
           <button
             disabled={invalidGuess} 
-            onClick={() => makeGuess(inputGuess)} 
+            onClick={() => handleGuess(inputGuess)} 
             className='py-3 px-8 rounded-lg disabled:bg-blue-500 enabled:bg-sky-400 enabled:hover:bg-sky-500'
           >
             Guess!
           </button>
         </div>
-        <div className='px-10 py-5 mt-10 border-4 border-green-500 bg-sky-200/80 text-3xl rounded-lg text-green-500'>
+        <div className={(isCorrect?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-green-500 bg-sky-200/80 text-3xl rounded-lg text-green-500'}>
           {inputGuess} is Correct!
         </div>
-        <div className='px-10 py-5 mt-10 border-4 border-red-500 bg-sky-200/80 text-3xl rounded-lg text-red-500'>
+        <div className={((!isCorrect&&isCorrect!==null)?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-red-500 bg-sky-200/80 text-3xl rounded-lg text-red-500'}>
           {inputGuess} is Wrong!
         </div>
       </div>
