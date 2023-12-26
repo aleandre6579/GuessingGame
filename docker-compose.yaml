@@ -22,7 +22,7 @@ services:
       - system-facing
   frontend:
     image: ${FRONTEND_IMAGE}
-    build: ./react-frontend
+    build: ./frontend
     networks:
       - user-facing
   backend:
