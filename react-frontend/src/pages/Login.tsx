@@ -36,9 +36,15 @@ const Login = ()  => {
     }
 
     const logIn = async () => {
-        const res = await axios.post("/api/login", JSON.stringify({username, password}))
-        const resData = res.data
+        let res: any = null
+        try {
+            res = await axios.post("/api/login", JSON.stringify({username, password}))
+        } catch(e) {
+            window.alert("Wrong username or password")
+            return
+        }
 
+        const resData = res.data
         if (res.status === 200) {
             auth?.setToken(resData)
             navigate(state?.path || "/")
