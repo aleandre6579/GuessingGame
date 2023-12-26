@@ -3,7 +3,7 @@ import { isGuessValid } from '../scripts/formLogic.js'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Easy() {
+function Level({ levelName, lower, upper}) {
   const navigate = useNavigate()
 
   const [inputGuess, setGuess] = useState(0)
@@ -14,7 +14,7 @@ function Easy() {
   const handleInputChange = event => {
     const guess = parseInt(event.target.value)
     setGuess(guess)
-    if (!isGuessValid(event.target.value, 1, 5)) {
+    if (!isGuessValid(event.target.value, lower, upper)) {
       setInvalidGuess(true)
     } else {
       setInvalidGuess(false)
@@ -22,8 +22,7 @@ function Easy() {
   }
 
   const handleGuess = async (guess) => {
-    const res = await makeGuess(guess, "easy")
-    console.log(res)
+    const res = await makeGuess(guess, levelName)
     setIsCorrect(res)
     setGuessedNumber(guess)
   }
@@ -42,7 +41,7 @@ function Easy() {
               &#x25c0; Back
           </span>
           <p className=''>
-            The number is between 1 and 5
+            The number is between {lower} and {upper}
           </p>
 
           <input 
@@ -72,4 +71,4 @@ function Easy() {
   )
 }
 
-export default Easy
+export default Level

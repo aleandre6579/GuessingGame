@@ -2,9 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../auth/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Home from "../pages/Home"
-import Easy from "../pages/Easy"
-import Medium from "../pages/Medium"
-import Hard from "../pages/Hard"
+import Level from "../pages/Level"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
 
@@ -25,15 +23,15 @@ const Routes = () => {
       children: [
         {
           path: "/easy",
-          element: <Easy/>,
+          element: <Level levelName="easy" lower={1} upper={5}/>,
         },
         {
           path: "/medium",
-          element: <Medium/>,
+          element: <Level levelName="medium" lower={1} upper={10}/>,
         },
         {
           path: "/hard",
-          element: <Hard/>,
+          element: <Level levelName="hard" lower={1} upper={20}/>,
         },
       ],
     },
