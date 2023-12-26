@@ -68,7 +68,8 @@ function Level({ levelName, lower, upper}) {
           </button>
         </div>
         <div className={((isCorrect&&isCorrect!==-1)?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-green-500 bg-sky-200/80 text-3xl rounded-lg text-green-500'}>
-          {guessedNumber} is Correct!
+          <span className='relative top-[-10px]'>{guessedNumber} is Correct!<br/></span>
+          <span className='absolute bottom-2 left-[7px] text-sm'>(A new number has been generated)</span>
         </div>
         <div className={((!isCorrect&&isCorrect!==-1)?'block':'hidden') + ' absolute bottom-[-4em] px-10 py-5 mt-10 border-4 border-red-500 bg-sky-200/80 text-3xl rounded-lg text-red-500'}>
           {guessedNumber} is Wrong!
