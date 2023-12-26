@@ -2,7 +2,7 @@
 function DifficultyButton({text, color}) {
 
   return (
-    <button className={`w-64 h-14 text-xl rounded-lg hover:scale-110 transition ease-in-out duration-300`} style={{backgroundColor: color}}>
+    <button className={`w-80 h-16 text-xl rounded-lg hover:scale-110 transition ease-in-out duration-300`} style={{backgroundColor: color}}>
       {text}
     </button>
   )

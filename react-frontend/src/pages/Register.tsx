@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from '../auth/authProvider'
 import axios from 'axios'
 
@@ -13,6 +13,7 @@ const Register = ()  => {
     
     const navigate = useNavigate();
     const auth = useAuth();
+    const {state} = useLocation();
     
     const validateLogin = () => {
         setUsernameError("")
@@ -53,7 +54,7 @@ const Register = ()  => {
 
         if (res.status === 200) {
             auth?.setToken(resData)
-            navigate("/")
+            navigate(state?.path || "/")
         } else {
             window.alert("There was a problem with registering")
         }

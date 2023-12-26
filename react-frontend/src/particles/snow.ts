@@ -18,15 +18,15 @@ const options: ISourceOptions = {
     },
     modes: {
       repulse: {
-        distance: 70,
-        speed: 0.15,
+        distance: 80,
+        speed: 0.18,
       },
       attract: {
-        distance: 100,
-        duration: 0.2,
+        distance: 120,
+        duration: 0.1,
         factor: 5,
-        maxSpeed: 20,
-        speed: 5
+        maxSpeed: 30,
+        speed: 10
       },
       bubble: {
         distance: 300,

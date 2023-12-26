@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from '../auth/authProvider'
 import axios from 'axios'
 
@@ -11,6 +11,7 @@ const Login = ()  => {
     
     const navigate = useNavigate();
     const auth = useAuth();
+    const {state} = useLocation();
     
     const validateLogin = () => {
         setUsernameError("")
@@ -40,7 +41,7 @@ const Login = ()  => {
 
         if (res.status === 200) {
             auth?.setToken(resData)
-            navigate("/")
+            navigate(state?.path || "/")
         } else {
             window.alert("Wrong username or password")
         }
@@ -82,7 +83,7 @@ const Login = ()  => {
         <div className="mt-2">
             <p className="text-body-2 text-black">
                 Don't have an account? 
-                <a className="text-sky-500 cursor-pointer hover:text-sky-800" onClick={() => navigate('/register')}> Sign Up</a>
+                <a className="text-sky-500 cursor-pointer hover:text-sky-800" onClick={() => navigate('/register', state)}> Sign Up</a>
             </p>
         </div>
     </div>

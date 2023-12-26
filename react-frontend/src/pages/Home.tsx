@@ -12,7 +12,7 @@ function App() {
         </h2>
       </div>
 
-      <div className='relative w-100 bg-sky-200/80 h-full p-10 rounded-lg '>
+      <div className='relative w-100 bg-sky-200/80 h-full p-14 rounded-lg '>
         <div className='flex flex-col gap-10'>
           <Link to='/easy'><DifficultyButton text='Easy' color='cornflowerblue'></DifficultyButton></Link>
           <Link to='/medium'><DifficultyButton text='Medium' color='darksalmon'></DifficultyButton></Link>
