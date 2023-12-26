@@ -12,9 +12,9 @@ I kept the .env file in the repo for convenience sake but it's bad practice.
 
 <br/>
 
-Then run the docker-compose:
+Then go into the project's root folder and run the docker-compose:
 ```
-docker compose up -d
+cd GuessingGame && docker compose up -d
 ```
 
 <br/>
