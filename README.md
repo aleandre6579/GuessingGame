@@ -14,7 +14,7 @@ I kept the .env file in the repo for convenience sake but it's bad practice.
 
 Then go into the project's root folder and run the docker-compose:
 ```
-cd GuessingGame && docker compose up -d
+cd GuessingGame && docker compose build && docker compose up -d
 ```
 
 <br/>
