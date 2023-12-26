@@ -1,6 +1,8 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 func CreateUser(db *gorm.DB, username string, password string) (*User, error) {
 	usr := &User{

@@ -5,7 +5,7 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 type GuessRequest struct {
-	Number    int    `json:"number"`
+	Number    string `json:"number"`
 	LevelName string `json:"level"`
 }
 

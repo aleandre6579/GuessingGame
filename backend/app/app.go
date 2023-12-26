@@ -47,6 +47,10 @@ func (app *App) Start(ctx context.Context) error {
 		}
 	}
 
+	// Generate a starting number at each difficulty
+	for levelName, _ := range app.Config.DifficultyConfig {
+		guess.RegenerateGuess(app.DBClient, levelName)
+	}
 	app.router = loadRoutes(app)
 
 	http_server := &http.Server{

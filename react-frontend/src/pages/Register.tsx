@@ -52,7 +52,7 @@ const Register = ()  => {
         const resData = res.data
 
         if (res.status === 200) {
-            auth?.setToken(resData.token)
+            auth?.setToken(resData)
             navigate("/")
         } else {
             window.alert("There was a problem with registering")

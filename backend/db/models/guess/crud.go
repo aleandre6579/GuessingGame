@@ -8,35 +8,37 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetGuess(db *gorm.DB) (*Guess, error) {
+func GetGuessAtLevel(db *gorm.DB, levelName string) (*Guess, error) {
 	guess := &Guess{}
-	err := db.First(guess, 0).Error
+	err := db.Where("level = ?", levelName).First(guess).Error
 	return guess, err
 }
 
 func RegenerateGuess(db *gorm.DB, levelName string) error {
-	randomNumber, err := randomNumber(levelName)
+	randomNumber, err := randomNumberAtLevel(levelName)
 	if err != nil {
 		return err
 	}
 
 	guess := &Guess{
+		Level:  levelName,
 		Number: randomNumber,
 	}
 
-	// Delete guess with ID = 0
-	if err := db.Delete(&Guess{}, 0).Error; err != nil {
+	// Delete guess then create new one at that level
+	if err := db.Where("level = ?", levelName).Delete(&Guess{}).Error; err != nil {
+		fmt.Println("No guess yet to delete at level " + levelName)
 		return err
 	}
-
 	if err := db.Create(guess).Error; err != nil {
+		fmt.Println("Failed to create new guess")
 		return err
 	}
 
 	return nil
 }
 
-func randomNumber(levelName string) (int, error) {
+func randomNumberAtLevel(levelName string) (int, error) {
 	bounds, err := getLevel(levelName)
 	if err != nil {
 		return -1, err
